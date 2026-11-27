@@ -151,7 +151,7 @@ export function pointStyleFunction(feature, resolution) {
       ? new Text({
           text: kode,
           offsetY: -(radius + 9),
-          font: '600 10px -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif',
+          font: '600 10px "Plus Jakarta Sans", system-ui, sans-serif',
           fill: new Fill({ color: '#0f172a' }),
           stroke: new Stroke({ color: '#ffffff', width: 3 }),
         })
@@ -208,7 +208,7 @@ export function zoneStyleFunction(feature) {
     }),
     text: new Text({
       text: `${kode}\n${jenisZona}`,
-      font: '700 10.5px -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif',
+      font: '700 10.5px "Plus Jakarta Sans", system-ui, sans-serif',
       fill: new Fill({ color: isPermukiman ? '#92400e' : '#312e81' }),
       stroke: new Stroke({ color: '#ffffff', width: 3 }),
     }),
@@ -240,7 +240,7 @@ export function analysisStyleFunction(feature) {
     }),
     text: new Text({
       text: skor !== undefined ? `${kode} (${jenisZona === 'Zona Permukiman' ? 'Permukiman' : 'Sekolah'})\nSkor ${skor}` : kode,
-      font: '700 10.5px -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif',
+      font: '700 10.5px "Plus Jakarta Sans", system-ui, sans-serif',
       fill: new Fill({ color: '#0f172a' }),
       stroke: new Stroke({ color: '#ffffff', width: 3 }),
     }),

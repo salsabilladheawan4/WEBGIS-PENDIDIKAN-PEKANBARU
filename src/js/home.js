@@ -9,6 +9,14 @@
  * Catatan: Tidak memakai localStorage/sessionStorage maupun layanan eksternal.
  */
 
+import '@fontsource/plus-jakarta-sans/400.css';
+import '@fontsource/plus-jakarta-sans/500.css';
+import '@fontsource/plus-jakarta-sans/600.css';
+import '@fontsource/plus-jakarta-sans/700.css';
+import '@fontsource/outfit/600.css';
+import '@fontsource/outfit/700.css';
+import '@fontsource/outfit/800.css';
+
 const DEFAULT_STATS = {
   points: 30,
   routes: 5,

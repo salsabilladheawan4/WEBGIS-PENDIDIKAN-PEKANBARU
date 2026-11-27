@@ -4,6 +4,12 @@
  * hover tooltip, popup beranimasi, legenda dinamis, basemap OSM/Satelit, dan Turf.js.
  * Catatan: Tidak menggunakan localStorage maupun sessionStorage.
  */
+import '@fontsource/plus-jakarta-sans/400.css';
+import '@fontsource/plus-jakarta-sans/500.css';
+import '@fontsource/plus-jakarta-sans/600.css';
+import '@fontsource/plus-jakarta-sans/700.css';
+import '@fontsource/outfit/600.css';
+import '@fontsource/outfit/700.css';
 import 'ol/ol.css';
 import Map from 'ol/Map';
 import View from 'ol/View';
