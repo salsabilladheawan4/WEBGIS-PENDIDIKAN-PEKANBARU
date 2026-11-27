@@ -1,0 +1,57 @@
+/* Tema bersama untuk index.html dan peta.html
+ * Gaya terang dan bersih ala PlainGIS: latar putih/abu sangat muda,
+ * warna utama biru tua (navy), serta aksen hijau/kuning/merah khusus
+ * untuk indikator kondisi jalan dan kelas aksesibilitas.
+ */
+:root {
+  /* Warna Utama (Navy) */
+  --color-navy: #1b365d;
+  --color-navy-hover: #132846;
+  --color-navy-soft: #edf2f8;
+  --color-navy-border: #cbd8e8;
+
+  /* Permukaan & Teks */
+  --color-bg: #f6f8fb;
+  --color-surface: #ffffff;
+  --color-surface-muted: #f1f5f9;
+  --color-border: #e2e8f0;
+  --color-text: #102033;
+  --color-text-muted: #526277;
+
+  /* Aksen Status (hanya untuk kondisi jalan & kelas aksesibilitas) */
+  --color-status-high: #16a34a;
+  --color-status-high-bg: #dcfce7;
+  --color-status-high-text: #166534;
+
+  --color-status-medium: #eab308;
+  --color-status-medium-bg: #fef9c3;
+  --color-status-medium-text: #854d0e;
+
+  --color-status-low: #dc2626;
+  --color-status-low-bg: #fee2e2;
+  --color-status-low-text: #991b1b;
+
+  /* Tipografi (tanpa font eksternal) */
+  --font-sans: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+
+  /* Skala Jarak */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 24px;
+  --space-6: 32px;
+  --space-7: 48px;
+  --space-8: 72px;
+
+  /* Radius Sudut */
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-pill: 999px;
+
+  /* Bayangan Tipis */
+  --shadow-sm: 0 2px 8px rgba(16, 32, 51, 0.05);
+  --shadow-md: 0 6px 20px rgba(16, 32, 51, 0.07);
+  --shadow-lg: 0 12px 32px rgba(16, 32, 51, 0.11);
+}

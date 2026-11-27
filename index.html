@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SIG Pendidikan Pekanbaru — Aksesibilitas Fasilitas Pendidikan</title>
+  <link rel="stylesheet" href="/src/theme.css" />
+  <link rel="stylesheet" href="/src/styles/home.css" />
+</head>
+<body>
+  <!-- 1. Navbar Tetap di Atas -->
+  <header class="navbar">
+    <div class="container nav-inner">
+      <a href="#beranda" class="brand">
+        <span class="brand-mark" aria-hidden="true">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 21s-6-5.3-6-10a6 6 0 1 1 12 0c0 4.7-6 10-6 10z" />
+            <circle cx="12" cy="11" r="2.2" />
+          </svg>
+        </span>
+        <span class="brand-name">SIG Pendidikan Pekanbaru</span>
+      </a>
+
+      <button
+        id="btn-nav-toggle"
+        class="nav-toggle"
+        type="button"
+        aria-label="Buka menu navigasi"
+        aria-expanded="false"
+        aria-controls="nav-menu"
+      >
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round">
+          <line x1="3" y1="6" x2="21" y2="6" />
+          <line x1="3" y1="12" x2="21" y2="12" />
+          <line x1="3" y1="18" x2="21" y2="18" />
+        </svg>
+      </button>
+
+      <nav id="nav-menu" class="nav-menu" aria-label="Navigasi utama">
+        <ul class="nav-links">
+          <li><a href="#beranda">Beranda</a></li>
+          <li><a href="#tentang">Tentang</a></li>
+          <li><a href="#fitur">Fitur</a></li>
+          <li><a href="#cara-pakai">Cara Pakai</a></li>
+          <li><a href="#data">Data</a></li>
+        </ul>
+        <a href="./peta.html" class="btn btn-primary btn-sm">Buka Peta</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <!-- 2. Hero (tanpa peta OpenLayers, ilustrasi panel CSS/SVG ala PlainGIS) -->
+    <section id="beranda" class="hero">
+      <div class="container hero-grid">
+        <div class="hero-copy">
+          <span class="hero-eyebrow">Sistem Informasi Geografis · Kota Pekanbaru</span>
+          <h1>Aksesibilitas Fasilitas Pendidikan di Kota Pekanbaru</h1>
+          <p class="hero-subtitle">
+            Memetakan dan menganalisis kemudahan akses menuju sekolah berdasarkan kondisi jalan,
+            fasilitas pedestrian, dan ketersediaan transportasi umum.
+          </p>
+          <div class="hero-actions">
+            <a href="./peta.html" class="btn btn-primary btn-lg btn-pulse">Buka Peta &rarr;</a>
+            <a href="#fitur" class="btn btn-secondary btn-lg">Pelajari Fitur</a>
+          </div>
+        </div>
+
+        <!-- Ilustrasi Mockup Interaktif Panel Peta & Pencarian Atribut (CSS/SVG murni) -->
+        <div class="hero-mockup">
+          <div class="mockup-window">
+            <div class="mockup-topbar">
+              <span class="mockup-dots"><i></i><i></i><i></i></span>
+              <span class="mockup-title">Pratinjau Interaktif · Klik Filter atau Sekolah</span>
+            </div>
+            <div class="mockup-body">
+              <div class="mockup-panel">
+                <div class="mockup-chip-row" role="group" aria-label="Filter pratinjau kondisi jalan">
+                  <button type="button" class="m-chip m-chip-all active" data-mock-filter="all">Semua</button>
+                  <button type="button" class="m-chip m-chip-green" data-mock-filter="baik">Baik</button>
+                  <button type="button" class="m-chip m-chip-yellow" data-mock-filter="sedang">Sedang</button>
+                  <button type="button" class="m-chip m-chip-red" data-mock-filter="buruk">Berlubang</button>
+                </div>
+                <div class="mockup-list" id="mockup-list">
+                  <button type="button" class="mockup-item active" data-status="baik" data-cx="96" data-cy="68">
+                    <span class="m-dot m-dot-green"></span>
+                    <div>
+                      <strong>SMAN 9 Pekanbaru</strong>
+                      <small>Skor 3.0 · Akses Tinggi</small>
+                    </div>
+                  </button>
+                  <button type="button" class="mockup-item" data-status="sedang" data-cx="148" data-cy="118">
+                    <span class="m-dot m-dot-yellow"></span>
+                    <div>
+                      <strong>SMAN 8 Pekanbaru</strong>
+                      <small>Skor 1.92 · Akses Sedang</small>
+                    </div>
+                  </button>
+                  <button type="button" class="mockup-item" data-status="buruk" data-cx="166" data-cy="144">
+                    <span class="m-dot m-dot-red"></span>
+                    <div>
+                      <strong>MI 1 Pekanbaru</strong>
+                      <small>Skor 1.25 · Akses Rendah</small>
+                    </div>
+                  </button>
+                </div>
+              </div>
+              <div class="mockup-canvas">
+                <svg viewBox="0 0 220 200" fill="none" xmlns="http://www.w3.org/2000/svg" aria-label="Ilustrasi skematis zona dan titik sekolah">
+                  <path d="M0 40H220M0 90H220M0 140H220M55 0V200M115 0V200M170 0V200" stroke="#e2e8f0" stroke-width="1" />
+                  <polygon points="36,36 105,28 118,84 48,96" fill="rgba(22,163,74,0.16)" stroke="#16a34a" stroke-width="1.5" />
+                  <polygon points="118,95 186,88 192,158 112,166" fill="rgba(234,179,8,0.18)" stroke="#eab308" stroke-width="1.5" stroke-dasharray="4 3" />
+                  <polyline class="mockup-route" points="62,56 96,68 148,118 166,144" stroke="#1b365d" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" />
+                  <!-- Lingkaran buffer interaktif yang berpindah saat sekolah diklik -->
+                  <circle id="mockup-buffer" class="mockup-buffer" cx="96" cy="68" r="32" fill="rgba(27,54,93,0.10)" stroke="#1b365d" stroke-width="1.4" stroke-dasharray="4 3" />
+                  <!-- Titik sekolah interaktif -->
+                  <circle class="mock-pt" data-status="baik" cx="62" cy="56" r="5.5" fill="#16a34a" stroke="#ffffff" stroke-width="2" />
+                  <circle class="mock-pt active" data-status="baik" cx="96" cy="68" r="6.5" fill="#16a34a" stroke="#ffffff" stroke-width="2" />
+                  <circle class="mock-pt" data-status="sedang" cx="148" cy="118" r="6" fill="#eab308" stroke="#ffffff" stroke-width="2" />
+                  <circle class="mock-pt" data-status="buruk" cx="166" cy="144" r="5.5" fill="#dc2626" stroke="#ffffff" stroke-width="2" />
+                </svg>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 3. Statistik Ringkas (4 Kartu, diambil lewat fetch dari public/data/*.json) -->
+    <section class="stats-section" aria-label="Statistik ringkas data">
+      <div class="container">
+        <div class="stats-grid">
+          <div class="stat-card">
+            <span id="stat-points" class="stat-value">30</span>
+            <span class="stat-label">Titik Sekolah &amp; Halte</span>
+          </div>
+          <div class="stat-card">
+            <span id="stat-routes" class="stat-value">5</span>
+            <span class="stat-label">Rute Menuju Sekolah</span>
+          </div>
+          <div class="stat-card">
+            <span id="stat-zones" class="stat-value">5</span>
+            <span class="stat-label">Zona Pendidikan &amp; Permukiman</span>
+          </div>
+          <div class="stat-card">
+            <span id="stat-layers" class="stat-value">5</span>
+            <span class="stat-label">Layer Tematik Peta</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 4. Tentang (Latar Belakang & 3 Tujuan Web) -->
+    <section id="tentang" class="section">
+      <div class="container">
+        <div class="section-head">
+          <span class="section-tag">Tentang Proyek</span>
+          <h2>Latar Belakang &amp; Tujuan</h2>
+        </div>
+
+        <div class="grid-2">
+          <article class="card">
+            <h3>Latar Belakang</h3>
+            <p>
+              Kemudahan akses menuju sekolah sangat dipengaruhi oleh kualitas infrastruktur di
+              sekitarnya, seperti kondisi permukaan jalan, ketersediaan trotoar bagi pejalan kaki,
+              serta dukungan moda transportasi umum. Pemetaan berbasis SIG membantu melihat sebaran
+              hambatan akses secara objektif agar perbaikan infrastruktur dapat lebih tepat sasaran.
+            </p>
+          </article>
+
+          <article class="card">
+            <h3>Tujuan Web</h3>
+            <ul class="bullet-list">
+              <li>Menyajikan sebaran fasilitas pendidikan di Kota Pekanbaru beserta kondisi jalan, pedestrian, dan transportasinya.</li>
+              <li>Memudahkan pencarian serta penyaringan lokasi sekolah berdasarkan kriteria aksesibilitas tertentu.</li>
+              <li>Menampilkan hasil klasifikasi skor aksesibilitas tiap zona untuk menentukan wilayah prioritas perbaikan.</li>
+            </ul>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- 5. Fitur (4 Kartu dengan Ikon SVG) -->
+    <section id="fitur" class="section section-alt">
+      <div class="container">
+        <div class="section-head">
+          <span class="section-tag">Fitur Utama</span>
+          <h2>Apa yang Bisa Dilakukan di Halaman Peta</h2>
+        </div>
+
+        <div class="grid-4">
+          <article class="card feature-card">
+            <div class="icon-box" aria-hidden="true">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polygon points="12 2 2 7 12 12 22 7 12 2" />
+                <polyline points="2 12 12 17 22 12" />
+                <polyline points="2 17 12 22 22 17" />
+              </svg>
+            </div>
+            <h3>Peta Interaktif Multi-Layer</h3>
+            <p>
+              Kelola 5 layer tematik secara bebas (titik fasilitas, rute, zona, hasil analisis,
+              dan buffer) dengan pilihan peta dasar OSM dan Citra Satelit.
+            </p>
+          </article>
+
+          <article class="card feature-card">
+            <div class="icon-box" aria-hidden="true">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3" />
+              </svg>
+            </div>
+            <h3>Filter Multi-Kriteria</h3>
+            <p>
+              Saring titik sekolah berdasarkan kondisi jalan, ketersediaan pedestrian, jenis
+              sekolah, kelas akses, dan moda transportasi utama.
+            </p>
+          </article>
+
+          <article class="card feature-card">
+            <div class="icon-box" aria-hidden="true">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="9" />
+                <circle cx="12" cy="12" r="4" />
+                <line x1="12" y1="3" x2="12" y2="5" />
+                <line x1="12" y1="19" x2="12" y2="21" />
+              </svg>
+            </div>
+            <h3>Visualisasi Tematik</h3>
+            <p>
+              Simbol titik dibedakan melalui warna kondisi jalan, bentuk sesuai jenis sekolah,
+              serta ukuran yang mengikuti skor aksesibilitas.
+            </p>
+          </article>
+
+          <article class="card feature-card">
+            <div class="icon-box" aria-hidden="true">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="11" cy="11" r="7" />
+                <line x1="21" y1="21" x2="16.65" y2="16.65" />
+                <circle cx="11" cy="11" r="2.5" />
+              </svg>
+            </div>
+            <h3>Analisis Spasial</h3>
+            <p>
+              Hitung area layanan buffer (500–2000 m), jalankan <em>spatial query</em> fasilitas
+              dalam radius, dan tinjau skor aksesibilitas per zona.
+            </p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- 6. Cara Pakai (4 Langkah Bernomor) -->
+    <section id="cara-pakai" class="section">
+      <div class="container">
+        <div class="section-head">
+          <span class="section-tag">Panduan Singkat</span>
+          <h2>Cara Pakai</h2>
+        </div>
+
+        <ol class="steps-grid">
+          <li class="card step-card">
+            <span class="step-num">1</span>
+            <h3>Buka Peta</h3>
+            <p>Tekan tombol <strong>Buka Peta</strong> untuk masuk ke halaman peta interaktif Kota Pekanbaru.</p>
+          </li>
+          <li class="card step-card">
+            <span class="step-num">2</span>
+            <h3>Pilih Layer</h3>
+            <p>Aktifkan atau nonaktifkan layer yang ingin ditampilkan melalui panel samping.</p>
+          </li>
+          <li class="card step-card">
+            <span class="step-num">3</span>
+            <h3>Terapkan Filter</h3>
+            <p>Gunakan filter kondisi jalan, pedestrian, jenis sekolah, dan transportasi untuk menyaring data.</p>
+          </li>
+          <li class="card step-card">
+            <span class="step-num">4</span>
+            <h3>Jalankan Analisis &amp; Baca Hasil</h3>
+            <p>Klik sekolah untuk membuat buffer layanan, lalu baca daftar jarak dan ringkasan skor zona.</p>
+          </li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- 7. Data & Metode -->
+    <section id="data" class="section section-alt">
+      <div class="container">
+        <div class="section-head">
+          <span class="section-tag">Data &amp; Metode</span>
+          <h2>Sumber Data &amp; Skoring Aksesibilitas</h2>
+        </div>
+
+        <div class="grid-2">
+          <article class="card">
+            <h3>Sumber Data Survei</h3>
+            <p>
+              Data primer dikumpulkan melalui survei lapangan menggunakan aplikasi
+              <strong>Avenza Maps</strong> di Kota Pekanbaru dengan cakupan
+              <strong>30 titik</strong> fasilitas pendidikan dan halte (koordinat WGS 84 /
+              <code>EPSG:4326</code>).
+            </p>
+          </article>
+
+          <article class="card">
+            <h3>Metode Skoring Zona</h3>
+            <p class="formula-box">
+              <strong>Skor</strong> = 40% jarak + 25% kondisi jalan + 20% pedestrian + 15% transportasi
+            </p>
+            <div class="class-pills" role="group" aria-label="Pilih kelas aksesibilitas untuk melihat penjelasan">
+              <button type="button" class="status-pill status-high active" data-class-info="Tinggi: Skor > 2,33 — kondisi jalan baik, trotoar tersedia, dan dilayani Bus TMP/angkot.">Tinggi</button>
+              <button type="button" class="status-pill status-medium" data-class-info="Sedang: Skor 1,67 – 2,33 — akses cukup memadai, namun sebagian belum memiliki trotoar atau jalan sedang.">Sedang</button>
+              <button type="button" class="status-pill status-low" data-class-info="Rendah: Skor < 1,67 — jalan berlubang, tanpa trotoar, dan pilihan transportasi umum terbatas (prioritas perbaikan).">Rendah</button>
+            </div>
+            <p id="class-info-text" class="class-info-text">
+              Tinggi: Skor &gt; 2,33 — kondisi jalan baik, trotoar tersedia, dan dilayani Bus TMP/angkot.
+            </p>
+          </article>
+        </div>
+
+        <!-- Kotak Catatan Wajib -->
+        <aside class="notice-box" role="note">
+          <strong>Catatan Data:</strong>
+          Rute dan zona pada web ini merupakan estimasi yang dibentuk dari titik-titik survei,
+          bukan hasil rekaman lapangan.
+        </aside>
+      </div>
+    </section>
+
+    <!-- 8. Tim -->
+    <section id="tim" class="section">
+      <div class="container">
+        <div class="section-head">
+          <span class="section-tag">Informasi Kelompok</span>
+          <h2>Tim Penyusun</h2>
+        </div>
+
+        <article class="card team-card">
+          <div class="team-meta">
+            <div>
+              <span class="meta-label">Mata Kuliah</span>
+              <strong>Sistem Informasi Geografis</strong>
+            </div>
+            <div>
+              <span class="meta-label">Kelompok</span>
+              <strong>[isi nama kelompok]</strong>
+            </div>
+          </div>
+
+          <div class="team-members">
+            <span class="meta-label">Daftar Anggota</span>
+            <ul class="member-list">
+              <li>[Nama anggota 1]</li>
+              <li>[Nama anggota 2]</li>
+              <li>[Nama anggota 3]</li>
+              <li>[Nama anggota 4]</li>
+            </ul>
+          </div>
+        </article>
+      </div>
+    </section>
+  </main>
+
+  <!-- 9. Footer -->
+  <footer class="footer">
+    <div class="container footer-inner">
+      <div class="footer-left">
+        <p class="footer-copy">&copy; 2026 SIG Pendidikan Pekanbaru</p>
+        <p class="footer-credit">Referensi tata letak: PlainGIS oleh Alexey Izotov (Dribbble)</p>
+      </div>
+      <nav class="footer-links" aria-label="Tautan footer">
+        <a href="#beranda">Beranda</a>
+        <a href="./peta.html">Buka Peta</a>
+      </nav>
+    </div>
+  </footer>
+
+  <!-- Tombol Kembali ke Atas -->
+  <button id="btn-back-top" class="back-top hidden" type="button" aria-label="Kembali ke atas" title="Kembali ke atas">
+    &uarr;
+  </button>
+
+  <script type="module" src="/src/js/home.js"></script>
+</body>
+</html>

@@ -1,0 +1,20 @@
+{
+  "name": "webgis-aksesibilitas-pendidikan-pekanbaru",
+  "version": "1.0.0",
+  "description": "WebGIS Aksesibilitas Fasilitas Pendidikan Kota Pekanbaru menggunakan Vite, OpenLayers, dan Turf.js",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "start": "vite",
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "@turf/turf": "7.4.0",
+    "ol": "10.11.0"
+  },
+  "devDependencies": {
+    "vite": "8.4.0"
+  }
+}

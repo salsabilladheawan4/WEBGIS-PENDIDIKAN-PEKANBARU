@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Peta Interaktif — Aksesibilitas Fasilitas Pendidikan Kota Pekanbaru</title>
+  <link rel="stylesheet" href="/src/theme.css" />
+  <link rel="stylesheet" href="/src/styles/map.css" />
+</head>
+<body>
+  <!-- Bilah Atas Halaman Peta -->
+  <header class="topbar">
+    <div class="topbar-left">
+      <button
+        id="btn-toggle-sidebar"
+        class="btn-icon"
+        type="button"
+        aria-label="Buka atau tutup panel kontrol"
+        title="Buka/Tutup Panel"
+      >
+        &#9776;
+      </button>
+      <div class="topbar-title">
+        <h1>Aksesibilitas Fasilitas Pendidikan Kota Pekanbaru</h1>
+        <p class="topbar-note">Catatan: Rute dan zona merupakan estimasi dari titik survei.</p>
+      </div>
+    </div>
+
+    <div class="topbar-actions">
+      <div class="basemap-switch" role="group" aria-label="Pilihan peta dasar">
+        <button type="button" class="basemap-btn active" data-basemap="osm">Peta OSM</button>
+        <button type="button" class="basemap-btn" data-basemap="satelit">Satelit</button>
+      </div>
+      <button id="btn-zoom-all" type="button" class="btn btn-secondary" title="Tampilkan seluruh area data">
+        Zoom Semua
+      </button>
+      <a href="./index.html" class="btn btn-primary">&larr; Beranda</a>
+    </div>
+  </header>
+
+  <!-- Tata Letak Utama: Sidebar + Kanvas Peta -->
+  <div class="app-layout">
+    <!-- Panel Samping -->
+    <aside id="sidebar" class="sidebar" aria-label="Panel Kontrol Peta">
+      <!-- Navigasi Tab Panel -->
+      <div class="sidebar-tabs" role="tablist">
+        <button type="button" class="tab-btn active" data-tab="tab-layer" role="tab" aria-selected="true">
+          Layer &amp; Filter
+        </button>
+        <button type="button" class="tab-btn" data-tab="tab-analisis" role="tab" aria-selected="false">
+          Analisis Buffer
+        </button>
+        <button type="button" class="tab-btn" data-tab="tab-zona" role="tab" aria-selected="false">
+          Skor Zona
+        </button>
+      </div>
+
+      <div class="sidebar-body">
+        <!-- TAB 1: Layer & Filter -->
+        <section id="tab-layer" class="tab-panel active">
+          <!-- Panduan Singkat -->
+          <div class="quick-tip">
+            <strong>Tips Cepat:</strong> Arahkan kursor ke titik/zona untuk info cepat, atau klik untuk melihat detail lengkap.
+          </div>
+
+          <!-- Kontrol 5 Layer -->
+          <div class="panel-section">
+            <h2 class="panel-title">Layer Peta</h2>
+            <div id="layer-controls" class="layer-list">
+              <!-- Diisi otomatis oleh main.js -->
+            </div>
+            <div id="missing-layer-info" class="info-banner hidden" role="status"></div>
+          </div>
+
+          <!-- Filter Titik Fasilitas -->
+          <div class="panel-section">
+            <div class="section-row">
+              <h2 class="panel-title">Filter Fasilitas</h2>
+              <button id="btn-reset-filter" type="button" class="btn-link">Reset Filter</button>
+            </div>
+
+            <div id="filter-counter" class="counter-badge">
+              Menampilkan 0 dari 0 titik
+            </div>
+
+            <!-- Filter Chip Checkbox: Kond_Jalan -->
+            <div class="filter-group">
+              <span class="filter-label">Kondisi Jalan</span>
+              <div id="filter-kond-jalan" class="chip-group"></div>
+            </div>
+
+            <!-- Filter Chip Checkbox: Pedestrian -->
+            <div class="filter-group">
+              <span class="filter-label">Fasilitas Pedestrian</span>
+              <div id="filter-pedestrian" class="chip-group"></div>
+            </div>
+
+            <!-- Filter Chip Checkbox: Kelas_Akses -->
+            <div class="filter-group">
+              <span class="filter-label">Kelas Aksesibilitas</span>
+              <div id="filter-kelas-akses" class="chip-group"></div>
+            </div>
+
+            <!-- Filter Dropdown: Jenis & Trans_Utama -->
+            <div class="select-grid">
+              <div class="filter-group">
+                <label for="filter-jenis" class="filter-label">Jenis Fasilitas</label>
+                <select id="filter-jenis" class="select-input">
+                  <option value="">Semua Jenis</option>
+                </select>
+              </div>
+
+              <div class="filter-group">
+                <label for="filter-trans-utama" class="filter-label">Transportasi Utama</label>
+                <select id="filter-trans-utama" class="select-input">
+                  <option value="">Semua Moda</option>
+                </select>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- TAB 2: Analisis Spasial (Buffer & Spatial Query) -->
+        <section id="tab-analisis" class="tab-panel">
+          <div class="panel-section">
+            <h2 class="panel-title">Buffer Interaktif (Turf.js)</h2>
+            <p class="helper-text">
+              Aktifkan sakelar di bawah, atur radius layanan, lalu <strong>klik sebuah sekolah di peta</strong>
+              untuk melihat area jangkauan dan fasilitas lain di sekitarnya.
+            </p>
+
+            <label class="toggle-card">
+              <div class="toggle-card-text">
+                <strong>Mode Buffer Interaktif</strong>
+                <span>Klik titik di peta untuk analisis</span>
+              </div>
+              <span class="switch">
+                <input type="checkbox" id="toggle-buffer-mode" />
+                <span class="switch-slider"></span>
+              </span>
+            </label>
+
+            <div class="slider-group">
+              <div class="section-row">
+                <label for="buffer-radius" class="filter-label">Radius Layanan</label>
+                <strong id="buffer-radius-label" class="radius-pill">1000 m</strong>
+              </div>
+              <input
+                type="range"
+                id="buffer-radius"
+                min="500"
+                max="2000"
+                step="50"
+                value="1000"
+              />
+              <div class="slider-ticks">
+                <span>500 m</span>
+                <span>1000 m</span>
+                <span>1500 m</span>
+                <span>2000 m</span>
+              </div>
+            </div>
+
+            <div class="analysis-actions">
+              <button id="btn-clear-buffer" type="button" class="btn btn-secondary btn-full">
+                Hapus Buffer di Peta
+              </button>
+            </div>
+          </div>
+
+          <!-- Hasil Spatial Query -->
+          <div class="panel-section">
+            <h3 class="panel-subtitle">Hasil Spatial Query</h3>
+            <div id="buffer-result" class="analysis-result">
+              <p class="empty-state">
+                Belum ada sekolah dipilih. Aktifkan mode buffer lalu klik titik sekolah di peta.
+              </p>
+            </div>
+          </div>
+        </section>
+
+        <!-- TAB 3: Ringkasan Skor Zona & Zona Prioritas -->
+        <section id="tab-zona" class="tab-panel">
+          <div class="panel-section">
+            <h2 class="panel-title">Bobot Penilaian Zona</h2>
+            <p class="helper-text">
+              Skor tiap zona dihitung dengan metode <em>weighted scoring</em> (skala 1,00 – 3,00):
+            </p>
+            <div class="weight-grid">
+              <div class="weight-item">
+                <span>Jarak</span>
+                <strong>40%</strong>
+              </div>
+              <div class="weight-item">
+                <span>Kondisi Jalan</span>
+                <strong>25%</strong>
+              </div>
+              <div class="weight-item">
+                <span>Pedestrian</span>
+                <strong>20%</strong>
+              </div>
+              <div class="weight-item">
+                <span>Transportasi</span>
+                <strong>15%</strong>
+              </div>
+            </div>
+          </div>
+
+          <div class="panel-section">
+            <h3 class="panel-subtitle">Zona Prioritas (Skor Terendah)</h3>
+            <div id="priority-zones-list" class="zone-list">
+              <!-- Diisi otomatis oleh analysis.js -->
+            </div>
+          </div>
+
+          <div class="panel-section">
+            <h3 class="panel-subtitle">Semua Zona (Klik untuk Zoom)</h3>
+            <div id="all-zones-list" class="zone-list">
+              <!-- Diisi otomatis oleh analysis.js -->
+            </div>
+          </div>
+        </section>
+      </div>
+    </aside>
+
+    <!-- Area Peta -->
+    <main class="map-wrapper">
+      <div id="map" class="map-canvas" role="application" aria-label="Peta interaktif Pekanbaru"></div>
+
+      <!-- Kotak Pencarian Sekolah Mengambang -->
+      <div class="map-search-box" role="search">
+        <span class="search-icon" aria-hidden="true">&#128269;</span>
+        <input
+          type="text"
+          id="facility-search"
+          class="search-input"
+          placeholder="Cari sekolah atau kode (mis. SMAN 1, P14)..."
+          autocomplete="off"
+        />
+        <button id="btn-clear-search" type="button" class="search-clear hidden" aria-label="Hapus pencarian">
+          &times;
+        </button>
+        <div id="search-results" class="search-results hidden"></div>
+      </div>
+
+      <!-- Banner Animasi saat Mode Buffer Aktif -->
+      <div id="buffer-mode-banner" class="buffer-banner hidden" role="status">
+        <span class="pulse-dot"></span>
+        <span id="buffer-banner-text">Mode Buffer Aktif — Klik titik sekolah di peta!</span>
+        <button id="btn-exit-buffer-mode" type="button" class="buffer-banner-close">Selesai</button>
+      </div>
+
+      <!-- Toast Notifikasi Interaktif -->
+      <div id="map-toast" class="map-toast hidden" role="status" aria-live="polite"></div>
+
+      <!-- Tooltip Hover Mengambang -->
+      <div id="map-tooltip" class="map-tooltip hidden" aria-hidden="true"></div>
+
+      <!-- Banner Catatan Estimasi di Peta -->
+      <div class="map-disclaimer" role="note">
+        Rute dan zona merupakan estimasi dari titik survei.
+      </div>
+
+      <!-- Legenda Dinamis -->
+      <div id="legend-panel" class="legend-panel">
+        <div class="legend-header">
+          <span>Legenda Peta</span>
+          <button
+            id="btn-toggle-legend"
+            type="button"
+            class="legend-toggle"
+            aria-label="Sembunyikan atau tampilkan legenda"
+          >
+            &minus;
+          </button>
+        </div>
+        <div id="legend-content" class="legend-content">
+          <!-- Diisi dinamis mengikuti layer aktif -->
+        </div>
+      </div>
+
+      <!-- Popup Atribut OpenLayers -->
+      <div id="popup" class="ol-popup hidden" role="dialog" aria-label="Detail fitur">
+        <button id="popup-closer" type="button" class="ol-popup-closer" aria-label="Tutup popup">
+          &times;
+        </button>
+        <div id="popup-content" class="popup-content"></div>
+      </div>
+    </main>
+  </div>
+
+  <script type="module" src="/src/js/main.js"></script>
+</body>
+</html>
