@@ -34,6 +34,7 @@ import {
   analysisStyleFunction,
   bufferLayerStyleFunction,
   interactiveBufferStyleFunction,
+  highlightStyleFunction,
 } from './style.js';
 import { initPointFilters } from './filter.js';
 import {
@@ -342,7 +343,28 @@ async function initApp() {
     showToast('Buffer interaktif dihapus');
   });
 
-  // 10. Interaksi Klik & Hover Tooltip pada Peta
+  // 10. Feature Overlay untuk Highlight saat Hover (sesuai Modul 8 OpenLayers)
+  const featureOverlay = new VectorLayer({
+    source: new VectorSource(),
+    map,
+    style: highlightStyleFunction,
+    zIndex: 60,
+  });
+
+  let highlightedFeature = null;
+  const highlightFeature = (feature) => {
+    if (feature !== highlightedFeature) {
+      if (highlightedFeature) {
+        featureOverlay.getSource().removeFeature(highlightedFeature);
+      }
+      if (feature) {
+        featureOverlay.getSource().addFeature(feature);
+      }
+      highlightedFeature = feature;
+    }
+  };
+
+  // Interaksi Klik & Hover Tooltip pada Peta
   const priorityOrder = ['points', 'routes', 'analysis', 'zones', 'buffers'];
 
   const getTopFeatureAtPixel = (pixel) => {
@@ -350,7 +372,7 @@ async function initApp() {
     map.forEachFeatureAtPixel(
       pixel,
       (feature, layer) => {
-        if (!layer || feature.get('_isInteractiveBuffer')) return;
+        if (!layer || !layer.get('key') || feature.get('_isInteractiveBuffer')) return;
         hits.push({ feature, layerKey: layer.get('key') });
       },
       { hitTolerance: 6 }
@@ -376,14 +398,17 @@ async function initApp() {
     showFeaturePopup(topHit.feature, evt.coordinate, popupContentEl, popupOverlay, popupEl);
   });
 
-  // Hover tooltip mengambang agar pengguna langsung tahu objek yang ditunjuk
+  // Hover tooltip mengambang + highlight featureOverlay saat pointermove
   map.on('pointermove', (evt) => {
     if (evt.dragging) {
       tooltipEl.classList.add('hidden');
+      highlightFeature(null);
       return;
     }
 
     const topHit = getTopFeatureAtPixel(evt.pixel);
+    highlightFeature(topHit ? topHit.feature : null);
+
     if (appState.bufferMode) {
       map.getTargetElement().style.cursor = 'crosshair';
     } else {
@@ -417,6 +442,7 @@ async function initApp() {
 
   map.getViewport().addEventListener('mouseleave', () => {
     tooltipEl.classList.add('hidden');
+    highlightFeature(null);
   });
 
   // 11. Interaksi UI: Tab Sidebar, Toggle Sidebar (Responsif HP), dan Toggle Legenda

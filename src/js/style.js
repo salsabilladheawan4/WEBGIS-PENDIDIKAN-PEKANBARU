@@ -292,3 +292,43 @@ export function interactiveBufferStyleFunction(feature) {
     }),
   });
 }
+
+/**
+ * Gaya highlight untuk featureOverlay saat kursor melayang (pointermove)
+ * di atas titik, rute, atau poligon zona (sesuai konsep Modul 8 OpenLayers).
+ */
+export function highlightStyleFunction(feature) {
+  const geomType = feature.getGeometry()?.getType();
+
+  if (geomType === 'Point') {
+    return new Style({
+      image: new CircleStyle({
+        radius: 15,
+        fill: new Fill({ color: 'rgba(27, 54, 93, 0.18)' }),
+        stroke: new Stroke({ color: '#1b365d', width: 2.5 }),
+      }),
+    });
+  }
+
+  if (geomType === 'LineString' || geomType === 'MultiLineString') {
+    return [
+      new Style({
+        stroke: new Stroke({ color: 'rgba(255, 255, 255, 0.95)', width: 9 }),
+      }),
+      new Style({
+        stroke: new Stroke({ color: '#1b365d', width: 5 }),
+      }),
+    ];
+  }
+
+  // Highlight poligon (zona / buffer)
+  return [
+    new Style({
+      fill: new Fill({ color: 'rgba(255, 255, 255, 0.18)' }),
+      stroke: new Stroke({ color: 'rgba(255, 255, 255, 0.92)', width: 5 }),
+    }),
+    new Style({
+      stroke: new Stroke({ color: '#1b365d', width: 2.5 }),
+    }),
+  ];
+}
